@@ -357,6 +357,7 @@
         <div class="node" data-node="projects">
           <div class="tree-item folder" onclick="toggleFolder(this)"><span class="ico">▸</span>projects</div>
           <div class="children">
+            <div class="tree-item file d1" data-file="projects-index" onclick="openFile('projects-index')"><span class="ico">≡</span>index</div>
             <div class="tree-item file d1" data-file="trainlens" onclick="openFile('trainlens')"><span class="ico">▤</span>trainlens</div>
             <div class="tree-item file d1" data-file="llm-safety-eval-benchmark" onclick="openFile('llm-safety-eval-benchmark')"><span class="ico">▤</span>llm-safety-eval-benchmark</div>
             <div class="tree-item file d1" data-file="customer-churn-analysis" onclick="openFile('customer-churn-analysis')"><span class="ico">▤</span>customer-churn-analysis</div>
@@ -460,6 +461,9 @@
       "Joins, window functions, aggregation, and query optimization — turning raw tables into analysis-ready datasets with PostgreSQL and MySQL.",
       "Real use: SQL views powering my churn analysis, plus R and Bash for data plumbing where needed."
     ]},
+    'projects-index': { label:'index', title:'Projects', crumb:'projects / index', body:[
+      "4 projects, all tested and deployed. Each one has a live demo — open any page in the sidebar."
+    ], list:['trainlens','llm-safety-eval-benchmark','customer-churn-analysis','ai-hr-automation-suite']},
     'trainlens': { label:'trainlens', title:'TrainLens', crumb:'projects / trainlens', body:[
       "TrainLens checks AI training data for customer-support chats: 5 quality dimensions, 11 automated checks, Groq batch labeling with a rule-based fallback when the AI is unsure, and a confidence-based human-review queue.",
       "Reports accuracy, F1, and calibration — benchmarked on 852 synthetic conversations at a 98.85% quality score. Built with Python, pandas, DuckDB, Streamlit, Plotly, and scikit-learn. Live demo linked below."
