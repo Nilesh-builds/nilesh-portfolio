@@ -378,6 +378,7 @@
         <div class="node" data-node="bookmarks">
           <div class="tree-item folder" onclick="toggleFolder(this)"><span class="ico">▸</span>bookmarks</div>
           <div class="children">
+            <div class="tree-item file d1" data-file="bookmarks-index" onclick="openFile('bookmarks-index')"><span class="ico">≡</span>index</div>
             <div class="tree-item file d1" data-file="tools" onclick="openFile('tools')"><span class="ico">▤</span>tools</div>
             <div class="tree-item file d1" data-file="certifications" onclick="openFile('certifications')"><span class="ico">▤</span>certifications</div>
             <div class="tree-item file d1" data-file="education" onclick="openFile('education')"><span class="ico">▤</span>education</div>
@@ -497,6 +498,9 @@
       "Right now I'm learning advanced ML and model evaluation, plus Power BI dashboard design for business storytelling — the next builds will lean harder on both.",
       "Open to internships and Data/AI roles. If my work looks useful, reach out — contact page coming to this site soon."
     ]},
+    'bookmarks-index': { label:'index', title:'Bookmarks', crumb:'bookmarks / index', body:[
+      "My toolbox in one place: daily tools, 20+ certifications, and education. Open any page in the sidebar."
+    ], list:['tools','certifications','education']},
     'tools': { label:'tools', title:'Tools', crumb:'bookmarks / tools', body:[
       "Daily drivers: Python (pandas, scikit-learn), SQL (PostgreSQL, MySQL), Streamlit + Plotly for dashboards.",
       "Also in the toolbox: R, HTML/CSS, Bash, Git/GitHub, Excel, Power BI, AWS basics, and n8n for automation."
