@@ -255,7 +255,10 @@
     z-index:1;
     font-size:11px;
     color:var(--text-dimmer);
+    text-align:right;
+    line-height:1.9;
   }
+  .trophies .q-done{color:var(--accent);}
 
   /* Minimap-ish fade edges */
   .fade-r{
@@ -390,7 +393,7 @@
         <div class="tree-item file" data-file="contact-us" onclick="openFile('contact-us')"><span class="ico">✉</span>contact-us</div>
       </div>
       <div class="sidebar-footer">
-        <div class="tree-item" onclick="window.open('mailto:kumarnilash509@gmail.com')"><span class="ico">✉</span>email</div>
+        <div class="tree-item" onclick="if(window.trackReach)window.trackReach();window.open('mailto:kumarnilash509@gmail.com')"><span class="ico">✉</span>email</div>
         <div class="tree-item" onclick="window.open('https://www.linkedin.com/in/nilesh-singh-b9b6932bb','_blank')"><span class="ico">in</span>linkedin</div>
         <div class="tree-item" onclick="window.open('https://github.com/Nilesh-builds','_blank')"><span class="ico">⌥</span>github</div>
         <div class="tree-item" onclick="window.open('https://nilesh-builds.github.io/','_blank')"><span class="ico">↗</span>portfolio</div>
@@ -417,7 +420,11 @@
             </div>
           </div>
 
-          <div class="trophies">open to: Data Analyst · AI Trainer · AI Evaluation</div>
+          <div class="trophies">
+            <div>open to: Data Analyst · AI Trainer · AI Evaluation</div>
+            <div id="quests"></div>
+            <div id="trophyCount">Trophies [0/4]</div>
+          </div>
         </div>
 
         <div class="doc-view" id="docView">
@@ -537,6 +544,7 @@
 
   function openFile(key){
     activeKey = key;
+    if(window.trackOpen){ window.trackOpen(key); }
 
     document.querySelectorAll('.tree-item.file').forEach(el=>el.classList.remove('active'));
     const sideEl = document.querySelector('.tree-item.file[data-file="'+key+'"]');
@@ -592,6 +600,64 @@
     statusRight.textContent = 'UTF-8 · Markdown · Ln 1, Col 1 · 60 FPS';
   }
 
+</script>
+
+<script>
+(function(){
+  var PROJECT_KEYS = ['trainlens','llm-safety-eval-benchmark','customer-churn-analysis','ai-hr-automation-suite'];
+  var STORE_KEY = 'nilesh-portfolio-quests';
+  var state = {visited:{}, project:false, demo:false, reach:false};
+  try{
+    var saved = localStorage.getItem(STORE_KEY);
+    if(saved){ state = JSON.parse(saved); }
+  }catch(e){}
+  function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+  function visitedCount(){
+    return Object.keys(state.visited).filter(function(k){ return k !== 'readme'; }).length;
+  }
+  function doneCount(){
+    var n = 0;
+    if(visitedCount() >= 5){ n++; }
+    if(state.project){ n++; }
+    if(state.demo){ n++; }
+    if(state.reach){ n++; }
+    return n;
+  }
+  function row(done, text){
+    return '<div class="'+(done ? 'q-done' : '')+'">'+(done ? '☑' : '☐')+' '+text+'</div>';
+  }
+  window.renderQuests = function(){
+    var el = document.getElementById('quests');
+    var tc = document.getElementById('trophyCount');
+    if(!el || !tc){ return; }
+    var vc = Math.min(visitedCount(), 5);
+    el.innerHTML =
+      row(vc >= 5, 'Explore 5+ pages ('+vc+'/5)') +
+      row(state.project, 'Open a project') +
+      row(state.demo, 'Visit a live demo') +
+      row(state.reach, 'Reach out');
+    tc.textContent = 'Trophies ['+doneCount()+'/4]';
+  };
+  window.trackOpen = function(key){
+    if(key && key !== 'readme'){ state.visited[key] = true; }
+    if(PROJECT_KEYS.indexOf(key) >= 0){ state.project = true; }
+    if(key === 'contact-us'){ state.reach = true; }
+    save();
+    window.renderQuests();
+  };
+  window.trackDemo = function(){ state.demo = true; save(); window.renderQuests(); };
+  window.trackReach = function(){ state.reach = true; save(); window.renderQuests(); };
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    var a = (t && t.closest) ? t.closest('a') : null;
+    if(!a){ return; }
+    var href = a.getAttribute('href') || '';
+    var txt = a.textContent || '';
+    if(txt.indexOf('Live demo') >= 0){ window.trackDemo(); }
+    if(href.indexOf('mailto:') === 0){ window.trackReach(); }
+  });
+  window.renderQuests();
+})();
 </script>
 
 <script>
