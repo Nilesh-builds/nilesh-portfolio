@@ -493,6 +493,8 @@
     ]},
     'projects-index': { label:'index', title:'Projects', crumb:'projects / index', body:[
       "4 projects, all tested and deployed. Each one has a live demo — open any page in the sidebar."
+    ], images:[
+      {src:'assets/anatomy.svg', cap:'How every project here is built — data to results.', tall:true}
     ], list:['trainlens','llm-safety-eval-benchmark','customer-churn-analysis','ai-hr-automation-suite']},
     'trainlens': { label:'trainlens', title:'TrainLens', crumb:'projects / trainlens', body:[
       "TrainLens checks AI training data for customer-support chats: 5 quality dimensions, 11 automated checks, Groq batch labeling with a rule-based fallback when the AI is unsure, and a confidence-based human-review queue.",
@@ -513,10 +515,16 @@
     'customer-churn-analysis': { label:'customer-churn-analysis', title:'Customer Churn Analysis — Telco Dataset', crumb:'projects / customer-churn-analysis', body:[
       "Telco churn prediction on 7,043 customer rows: data-quality checks, SQL views, leakage-safe modeling with cross-validation and calibration, cost-aware thresholds, and a live human-review dashboard.",
       "Balanced Random Forest won on business cost — ROC-AUC 0.84, catching 366 of 374 churners. Built with Python, SQL, pandas, scikit-learn, and Streamlit. Live demo linked below."
+    ], images:[
+      {src:'assets/churn-dashboard.png', cap:'Churn dashboard with human-review queue.'},
+      {src:'assets/churn-features.png', cap:'Feature importance — what drives churn.'},
+      {src:'assets/churn-contract.png', cap:'Churn distribution by contract type.'}
     ], link:{label:'Live demo →', url:'https://nilesh-customer-churn.streamlit.app/'}},
     'ai-hr-automation-suite': { label:'ai-hr-automation-suite', title:'AI HR Automation Suite', crumb:'projects / ai-hr-automation-suite', body:[
       "Six HR workflows running end-to-end: employee onboarding, leave management, sentiment and feedback analysis, a policy Q&A bot, an AI resume screener and ranker, and a WhatsApp HR chatbot.",
       "Google Sheets as the shared database, GPT-4 as the brains, Gmail / Slack / WhatsApp for alerts. Built with n8n automation — no manual HR busywork."
+    ], images:[
+      {src:'assets/hr-workflow.svg', cap:'HR automation flow — trigger to notification.', tall:true}
     ]},
     'blog-index': { label:'index', title:'Blog', crumb:'blog / index', body:[
       "Short notes from my builds — what worked, what broke, what's next. New posts get a date prefix like [2026-09]."
