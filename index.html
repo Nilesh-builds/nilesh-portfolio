@@ -307,6 +307,25 @@
     line-height:1.8;
   }
   .doc-body .k{color:var(--gold);}
+  .doc-body img.shot{
+    display:block;
+    width:100%;
+    max-width:620px;
+    height:300px;
+    object-fit:cover;
+    object-position:top;
+    border:1px solid var(--line);
+    border-radius:4px;
+    margin:6px 0 2px 0;
+    background:#0f1419;
+  }
+  .doc-body img.shot.tall{height:380px;}
+  .doc-body .shot-cap{
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin:0 0 16px 0;
+    max-width:620px;
+  }
 
   @media (max-width:720px){
     .sidebar{display:none;}
@@ -478,11 +497,18 @@
     'trainlens': { label:'trainlens', title:'TrainLens', crumb:'projects / trainlens', body:[
       "TrainLens checks AI training data for customer-support chats: 5 quality dimensions, 11 automated checks, Groq batch labeling with a rule-based fallback when the AI is unsure, and a confidence-based human-review queue.",
       "Reports accuracy, F1, and calibration — benchmarked on 852 synthetic conversations at a 98.85% quality score. Built with Python, pandas, DuckDB, Streamlit, Plotly, and scikit-learn. Live demo linked below."
+    ], images:[
+      {src:'assets/trainlens-composite.png', cap:'TrainLens dashboard — quality checks, review queue, and calibration.'},
+      {src:'assets/trainlens-dashboard.png', cap:'Quality dimensions across 852 conversations (98.85%).'}
     ], link:{label:'Live demo →', url:'https://trainlens-gv48ihtbq6nbapgfrlworc.streamlit.app/'}},
     'llm-safety-eval-benchmark': { label:'llm-safety-eval-benchmark', title:'LLM Safety & Response Evaluation Benchmark', crumb:'projects / llm-safety-eval-benchmark', body:[
       "I score AI answers on 9 things — following instructions, facts, relevance, bias, toxicity, refusal quality, prompt-injection defense, hallucination, and consistency — all on free-tier APIs.",
       "Rule-based checks plus a 2-model AI-judge team with 95% confidence ranges. Judges proven right on 11/11 reference tests and blind human review (humans agreed with each other at κ = 0.902). Result: GPT-OSS-120B scored 4.28 vs 4.18 for the 20B. Live demo linked below.",
       "Stack: Python · Groq free-tier APIs · pandas · matplotlib · Streamlit · Jupyter"
+    ], images:[
+      {src:'assets/safety-composite.png', cap:'Benchmark dashboard — composite scores by model.'},
+      {src:'assets/safety-comparison.png', cap:'Model comparison — GPT-OSS-120B (4.28) vs 20B (4.18).'},
+      {src:'assets/safety-agreement.png', cap:'Judge-vs-human agreement validation.'}
     ], link:{label:'Live demo →', url:'https://llm-safety-eval-benchmark-vrjugdrizxtaqt38s6mgep.streamlit.app/'}},
     'customer-churn-analysis': { label:'customer-churn-analysis', title:'Customer Churn Analysis — Telco Dataset', crumb:'projects / customer-churn-analysis', body:[
       "Telco churn prediction on 7,043 customer rows: data-quality checks, SQL views, leakage-safe modeling with cross-validation and calibration, cost-aware thresholds, and a live human-review dashboard.",
@@ -595,6 +621,22 @@
         const p = document.createElement('p');
         p.innerHTML = '<a href="'+l.url+'" target="_blank" rel="noopener" style="color:#8fd694;">'+l.label+'</a>';
         bodyEl.appendChild(p);
+      });
+    }
+    if(d.images){
+      d.images.forEach(function(im){
+        const img = document.createElement('img');
+        img.className = 'shot' + (im.tall ? ' tall' : '');
+        img.src = im.src;
+        img.alt = im.cap || d.title;
+        img.loading = 'lazy';
+        bodyEl.appendChild(img);
+        if(im.cap){
+          const cap = document.createElement('p');
+          cap.className = 'shot-cap';
+          cap.textContent = '// ' + im.cap;
+          bodyEl.appendChild(cap);
+        }
       });
     }
     titleLabel.textContent = 'Documents/portfolio/nilesh-singh — ' + d.label;
