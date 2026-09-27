@@ -1,2 +1,17 @@
 *.bak*
 *.bak-*
+
+# Vercel
+.vercel
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+
+# Local env (if you ever add a contact form / API key)
+.env
+.env.local
