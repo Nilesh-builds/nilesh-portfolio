@@ -387,6 +387,7 @@
 
         <div class="tree-item file active" data-file="readme" onclick="openFile('readme')"><span class="ico">▤</span>README</div>
         <div class="tree-item file" data-file="colophon" onclick="openFile('colophon')"><span class="ico">▤</span>colophon</div>
+        <div class="tree-item file" data-file="contact-us" onclick="openFile('contact-us')"><span class="ico">✉</span>contact-us</div>
       </div>
       <div class="sidebar-footer">
         <div class="tree-item" onclick="window.open('mailto:kumarnilash509@gmail.com')"><span class="ico">✉</span>email</div>
@@ -512,6 +513,13 @@
     'education': { label:'education', title:'Education', crumb:'bookmarks / education', body:[
       "BCA in Data Science — Sri Balaji University, Pune. Graduated 2026."
     ]},
+    'contact-us': { label:'contact-us', title:'Contact', crumb:'contact-us', body:[
+      "Want to talk data, AI, or work together? Fastest way is email — I reply within a day."
+    ], links:[
+      {label:'Email →', url:'mailto:kumarnilash509@gmail.com'},
+      {label:'LinkedIn →', url:'https://www.linkedin.com/in/nilesh-singh-b9b6932bb'},
+      {label:'GitHub →', url:'https://github.com/Nilesh-builds'}
+    ]},
     'colophon': { label:'colophon', title:'Colophon', crumb:'colophon', body:[
       "This site is built as a fake code editor window, in plain HTML, CSS and vanilla JS — no framework, no build step.",
       "The rain effect is a canvas of drifting ASCII glyphs. Content pulled from my GitHub profile README."
@@ -572,6 +580,13 @@
       const a = document.createElement('p');
       a.innerHTML = '<a href="'+d.link.url+'" target="_blank" rel="noopener" style="color:#8fd694;">'+d.link.label+'</a>';
       bodyEl.appendChild(a);
+    }
+    if(d.links){
+      d.links.forEach(function(l){
+        const p = document.createElement('p');
+        p.innerHTML = '<a href="'+l.url+'" target="_blank" rel="noopener" style="color:#8fd694;">'+l.label+'</a>';
+        bodyEl.appendChild(p);
+      });
     }
     titleLabel.textContent = 'Documents/portfolio/nilesh-singh — ' + d.label;
     statusRight.textContent = 'UTF-8 · Markdown · Ln 1, Col 1 · 60 FPS';
