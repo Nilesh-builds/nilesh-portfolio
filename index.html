@@ -830,53 +830,99 @@ runBoot();
   size(); frame();
 })();
 
-// cursor-following snake
+// cursor-following snake (small, eats food)
 (function(){
   const canvas = document.getElementById('cursorTrail');
   const ctx = canvas.getContext('2d');
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const N = 24, GAP = 8;
+  // reduced-motion: the snake still follows the cursor (the visitor's own motion) but never hunts or wanders by itself
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const START = 14, MAX = 28, GAP = 6;
   let w, h, dpr, segs, lastInput = -1e9;
   const target = {x:0, y:0};
+  let foods = [], bursts = [];
   function size(){
     dpr = window.devicePixelRatio || 1;
     w = window.innerWidth; h = window.innerHeight;
     canvas.width = w*dpr; canvas.height = h*dpr;
+    canvas.style.width = w+'px'; canvas.style.height = h+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
+  function spawn(){
+    for(let tries=0; tries<20; tries++){
+      const x = 40 + Math.random()*(w-80), y = 70 + Math.random()*(h-120);
+      if(Math.hypot(x-segs[0].x, y-segs[0].y) > 160 || tries===19){
+        foods.push({x:x, y:y, ph:Math.random()*6.28}); return;
+      }
+    }
+  }
+  function fillFoods(){ foods = []; const n = w < 720 ? 2 : 3; for(let i=0;i<n;i++) spawn(); }
   size();
-  segs = Array.from({length:N}, (_,i)=>({x:w*0.5 - i*GAP, y:h*0.5}));
+  target.x = w*0.5; target.y = h*0.5;
+  segs = Array.from({length:START}, (_,i)=>({x:w*0.5 - i*GAP, y:h*0.5}));
+  fillFoods();
   function aim(x,y){ target.x=x; target.y=y; lastInput=performance.now(); }
   function touch(e){ const t=e.touches[0]; if(t) aim(t.clientX,t.clientY); }
-  window.addEventListener('resize', size);
+  window.addEventListener('resize', ()=>{ size(); fillFoods(); });
   window.addEventListener('mousemove', e=>aim(e.clientX,e.clientY), {passive:true});
   window.addEventListener('touchstart', touch, {passive:true});
   window.addEventListener('touchmove', touch, {passive:true});
   function frame(now){
     ctx.clearRect(0,0,w,h);
-    if(now - lastInput > 2500){ // wander on its own when nobody is steering
-      target.x = w*0.5 + Math.cos(now*0.0004)*w*0.32;
-      target.y = h*0.5 + Math.sin(now*0.0007)*h*0.26;
-    }
     const head = segs[0];
+    if(!calm && now - lastInput > 2500){ // nobody steering: hunt the nearest food, else wander
+      let best = null, bd = 1e9;
+      foods.forEach(f=>{ const d = Math.hypot(f.x-head.x, f.y-head.y); if(d<bd){ bd=d; best=f; } });
+      if(best){ target.x = best.x; target.y = best.y; }
+      else {
+        target.x = w*0.5 + Math.cos(now*0.0004)*w*0.32;
+        target.y = h*0.5 + Math.sin(now*0.0007)*h*0.26;
+      }
+    }
     const dx = target.x-head.x, dy = target.y-head.y, dist = Math.hypot(dx,dy);
-    if(dist > 4){ const sp = Math.min(dist*0.09, 6); head.x += dx/dist*sp; head.y += dy/dist*sp; }
-    for(let i=1;i<N;i++){
+    if(dist > 3){ const sp = Math.max(Math.min(dist*0.09, 5), 1.2); head.x += dx/dist*sp; head.y += dy/dist*sp; }
+    for(let i=1;i<segs.length;i++){
       const p=segs[i-1], s=segs[i];
       const ddx=p.x-s.x, ddy=p.y-s.y, d=Math.hypot(ddx,ddy);
       if(d>GAP){ const k=(d-GAP)/d; s.x+=ddx*k; s.y+=ddy*k; }
     }
-    for(let i=N-1;i>=0;i--){
-      const t=i/(N-1), r=6.5-t*4.2;
-      ctx.fillStyle='rgba(200,255,77,'+(0.55-0.35*t)+')';
+    // eat
+    for(let i=foods.length-1;i>=0;i--){
+      const f = foods[i];
+      if(Math.hypot(f.x-head.x, f.y-head.y) < 9){
+        foods.splice(i,1);
+        if(segs.length < MAX){ const last = segs[segs.length-1]; segs.push({x:last.x, y:last.y}); }
+        if(!calm){ for(let k=0;k<8;k++){ const a=k*0.785; bursts.push({x:f.x, y:f.y, vx:Math.cos(a)*1.3, vy:Math.sin(a)*1.3, life:1}); } }
+        spawn();
+      }
+    }
+    // food
+    foods.forEach(f=>{
+      const r = 2.6 + (calm ? 0 : Math.sin(now*0.005+f.ph)*0.5);
+      ctx.fillStyle = 'rgba(227,194,90,0.18)';
+      ctx.beginPath(); ctx.arc(f.x, f.y, r+3.5, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(227,194,90,0.9)';
+      ctx.beginPath(); ctx.arc(f.x, f.y, r, 0, 6.2832); ctx.fill();
+    });
+    // eat burst
+    bursts = bursts.filter(b=>b.life>0);
+    bursts.forEach(b=>{
+      b.x+=b.vx; b.y+=b.vy; b.life-=0.05;
+      ctx.fillStyle = 'rgba(227,194,90,'+(b.life*0.8)+')';
+      ctx.beginPath(); ctx.arc(b.x, b.y, 1.3, 0, 6.2832); ctx.fill();
+    });
+    // snake
+    const n = segs.length;
+    for(let i=n-1;i>=0;i--){
+      const t=i/(n-1), r=4.4-t*3;
+      ctx.fillStyle='rgba(200,255,77,'+(0.6-0.35*t)+')';
       ctx.beginPath(); ctx.arc(segs[i].x, segs[i].y, r, 0, 6.2832); ctx.fill();
     }
     const ang = Math.atan2(head.y-segs[2].y, head.x-segs[2].x);
     ctx.fillStyle = '#08120E';
     [-1,1].forEach(sg=>{
-      const ex = head.x + Math.cos(ang)*2.5 + Math.cos(ang+1.5708)*sg*3;
-      const ey = head.y + Math.sin(ang)*2.5 + Math.sin(ang+1.5708)*sg*3;
-      ctx.beginPath(); ctx.arc(ex, ey, 1.3, 0, 6.2832); ctx.fill();
+      const ex = head.x + Math.cos(ang)*1.8 + Math.cos(ang+1.5708)*sg*2;
+      const ey = head.y + Math.sin(ang)*1.8 + Math.sin(ang+1.5708)*sg*2;
+      ctx.beginPath(); ctx.arc(ex, ey, 0.9, 0, 6.2832); ctx.fill();
     });
     requestAnimationFrame(frame);
   }
