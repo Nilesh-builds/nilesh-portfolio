@@ -80,7 +80,7 @@ The site auto-deploys to Vercel on push to `main`. To deploy your own copy:
 ## Contact
 
 - **Email:** [kumarnilash509@gmail.com](mailto:kumarnilash509@gmail.com)
-- **LinkedIn:** [nilesh-singh-b9b6932bb](https://www.linkedin.com/in/nilesh-singh-b9b6932bb/)
+- **LinkedIn:** [nilesh-singh-data](https://www.linkedin.com/in/nilesh-singh-data/)
 - **GitHub:** [@Nilesh-builds](https://github.com/Nilesh-builds)
 
 ## License

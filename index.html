@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nilesh Singh — Portfolio</title>
+<title>Nilesh Singh — Data Analyst · AI Evaluation Portfolio</title>
+<meta name="description" content="Nilesh Singh — BCA Data Science graduate in Pune, India. Data analytics and AI evaluation projects: TrainLens, LLM Safety Benchmark, Customer Churn Analysis, AI HR Automation.">
+<meta name="theme-color" content="#0D1310">
+<link rel="canonical" href="https://nilesh-builds.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nilesh Singh — Data Analyst · AI Evaluation">
+<meta property="og:description" content="Nilesh Singh — BCA Data Science graduate in Pune, India. Data analytics and AI evaluation projects: TrainLens, LLM Safety Benchmark, Customer Churn Analysis, AI HR Automation.">
+<meta property="og:url" content="https://nilesh-builds.github.io/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nilesh Singh","jobTitle":"Data Analyst · AI Evaluation","url":"https://nilesh-builds.github.io/","address":{"@type":"PostalAddress","addressLocality":"Pune","addressCountry":"IN"},"alumniOf":"Sri Balaji University","sameAs":["https://github.com/Nilesh-builds","https://www.linkedin.com/in/nilesh-singh-data/"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -31,6 +40,12 @@
   @keyframes blink{50%{opacity:0;}}
   @media (prefers-reduced-motion: reduce){ #boot{display:none;} }
 
+  #bootSkip{align-self:flex-start; margin-top:22px; background:none; border:1px solid var(--line); color:var(--muted); font:inherit; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;}
+  #bootSkip:hover{color:var(--accent); border-color:var(--accent);}
+  .hero .links{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:20px; font-size:12px;}
+  .hero .links a{color:var(--muted); text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s;}
+  .hero .links a:hover{color:var(--hero-accent); border-color:var(--hero-accent);}
+
   #bgCanvas{position:fixed; inset:0; z-index:0; pointer-events:none;}
   #shell{display:none; height:100vh; flex-direction:column; position:relative; z-index:1;}
   #shell.ready{display:flex;}
@@ -46,6 +61,9 @@
   .tb-socials a{color:var(--muted); font-size:11px; text-decoration:none; border-bottom:1px solid transparent;}
   .tb-socials a:hover{color:var(--accent); border-color:var(--accent);}
   @media(max-width:720px){ .tb-socials{display:none;} }
+  .tb-menu{display:none; background:none; border:1px solid var(--line); color:var(--text); font:inherit; font-size:14px; line-height:1; padding:4px 9px; border-radius:3px; cursor:pointer; flex-shrink:0;}
+  .tb-menu:hover{color:var(--accent); border-color:var(--accent);}
+  .tree-item:focus-visible,.tree-folder:focus-visible,.tb-menu:focus-visible{outline:1px solid var(--accent); outline-offset:-1px;}
 
   .body{flex:1; display:flex; min-height:0;}
   .sidebar{
@@ -111,18 +129,6 @@
   .chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:6px;}
   .chip{font-size:11px; padding:6px 10px; border:1px solid var(--line); border-radius:3px; color:var(--muted);}
 
-  .log-item{border-bottom:1px solid var(--line); font-size:12px;}
-  .log-head{display:flex; gap:14px; padding:10px 0; cursor:pointer; align-items:center;}
-  .log-head:hover{color:var(--text);}
-  .log-head .hash{color:var(--accent);}
-  .log-head .date{color:var(--muted); min-width:66px;}
-  .log-head .caret{margin-left:auto; color:var(--muted); font-size:10px; transition:transform .15s ease;}
-  .log-item.open .caret{transform:rotate(90deg);}
-  .log-diff{max-height:0; overflow:hidden; transition:max-height .2s ease; font-size:11px;}
-  .log-item.open .log-diff{max-height:60px;}
-  .log-diff-inner{padding:0 0 14px 80px; color:var(--muted);}
-  .log-diff .add{color:var(--accent);}
-  .log-diff .rem{color:var(--red);}
 
   .plinks{display:flex; gap:12px; margin-top:6px; font-size:11.5px; flex-wrap:wrap;}
   .plinks a{color:var(--text); border-bottom:1px solid var(--line); padding-bottom:2px;}
@@ -135,6 +141,80 @@
   }
   .btn-demo:hover{transform:translateY(-1px); color:#08120E !important; border-color:var(--accent) !important;}
   .btn-demo::before{content:"▶"; font-size:9px;}
+
+
+  /* ---- Hero intro ---- */
+  .hero{
+    --hero-accent:var(--accent); /* try #FF7F6B for coral */
+    position:relative; overflow:hidden; text-align:center; isolation:isolate;
+    padding:54px 20px 46px; margin:0 auto 30px; border:1px solid var(--line); border-radius:10px;
+    background:linear-gradient(180deg, rgba(18,24,20,.75), rgba(13,19,16,.25));
+  }
+  .hero::before,.hero::after{content:""; position:absolute; width:18px; height:18px; border:0 solid var(--hero-accent); opacity:.55; z-index:1;}
+  .hero::before{top:12px; left:12px; border-width:1px 0 0 1px;}
+  .hero::after{bottom:12px; right:12px; border-width:0 1px 1px 0;}
+  .hero-grid{
+    position:absolute; inset:0; z-index:-2;
+    background-image:radial-gradient(rgba(200,255,77,.16) 1px, transparent 1px); background-size:22px 22px;
+    -webkit-mask-image:radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%);
+            mask-image:radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%);
+  }
+  .hero-orb{
+    position:absolute; left:50%; top:-90px; width:420px; height:420px; margin-left:-210px; z-index:-1; border-radius:50%;
+    background:radial-gradient(circle, rgba(200,255,77,.20), transparent 68%); filter:blur(30px);
+    animation:orb 9s ease-in-out infinite alternate;
+  }
+  @keyframes orb{to{transform:translate(40px,26px) scale(1.12); opacity:.7;}}
+  @keyframes rise{from{opacity:0; transform:translateY(14px);}to{opacity:1; transform:none;}}
+  .hero>.rise{opacity:0; animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;}
+  .hero>.rise:nth-of-type(1){animation-delay:.05s} .hero>.rise:nth-of-type(2){animation-delay:.15s}
+  .hero>.rise:nth-of-type(3){animation-delay:.28s} .hero>.rise:nth-of-type(4){animation-delay:.4s}
+  .hero>.rise:nth-of-type(5){animation-delay:.52s} .hero>.rise:nth-of-type(6){animation-delay:.64s}
+  .hero>.rise:nth-of-type(7){animation-delay:.76s}
+
+  .hero .status{
+    display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.06em; color:var(--text);
+    padding:6px 13px; border:1px solid var(--line); border-radius:999px; background:rgba(10,15,12,.7); margin-bottom:26px;
+  }
+  .hero .status i{width:7px; height:7px; border-radius:50%; background:var(--hero-accent); box-shadow:0 0 0 0 rgba(200,255,77,.6); animation:ping 2s infinite;}
+  @keyframes ping{70%{box-shadow:0 0 0 8px rgba(200,255,77,0);} 100%{box-shadow:0 0 0 0 rgba(200,255,77,0);}}
+
+  .hero .hello{font-size:12.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted);}
+  .hero .hello b{color:var(--hero-accent); font-weight:500; letter-spacing:.05em; text-transform:none;}
+  .hero h1{
+    font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.1rem,7.4vw,4.4rem);
+    line-height:1.08; letter-spacing:-.02em; margin:6px 0 16px; overflow-wrap:anywhere;
+  }
+  .hero h1 .nm{
+    display:inline-block; background:linear-gradient(180deg,#FFFFFF 30%,#8FA396 110%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; transition:transform .25s ease;
+  }
+  .hero h1 .nm:hover{transform:translateY(-4px); background:linear-gradient(180deg,#F4FFD0,var(--hero-accent)); -webkit-background-clip:text; background-clip:text;}
+  .hero h1 .caret{display:inline-block; width:.42em; height:.09em; background:var(--hero-accent); margin-left:.12em; vertical-align:baseline; animation:blink 1s steps(1) infinite;}
+
+  .hero .hero-role{font-size:clamp(.95rem,2.4vw,1.35rem); color:var(--hero-accent); letter-spacing:.03em; min-height:1.6em;}
+  .hero .hero-role .br{color:var(--muted); opacity:.7;}
+  .hero .hero-role .tcur{display:inline-block; width:2px; height:1.05em; background:var(--hero-accent); margin-left:3px; vertical-align:-.18em; animation:blink 1s steps(1) infinite;}
+
+  .hero .hero-line{width:120px; height:1px; margin:24px auto; border:0; position:relative; background:linear-gradient(90deg, transparent, var(--hero-accent), transparent);}
+  .hero .hero-line::after{content:""; position:absolute; left:50%; top:-3px; width:7px; height:7px; margin-left:-3.5px; background:var(--hero-accent); transform:rotate(45deg); box-shadow:0 0 12px var(--hero-accent);}
+
+  .hero .hero-sub{font-size:11.5px; color:var(--muted); letter-spacing:.03em;}
+  .hero .hero-desc{color:#A5B3AA; font-size:clamp(.85rem,1.6vw,.98rem); line-height:1.85;}
+  .hero .tags{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:0 auto 26px; max-width:520px;}
+  .hero .tags span{font-size:11px; color:var(--muted); padding:4px 10px; border:1px dashed var(--line); border-radius:3px; transition:color .2s, border-color .2s;}
+  .hero .tags span:hover{color:var(--hero-accent); border-color:var(--hero-accent);}
+  .hero .cta{display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
+  .btn-ghost{
+    font-family:'JetBrains Mono',monospace; font-size:12px; padding:9px 16px; border-radius:3px; color:var(--text);
+    border:1px solid var(--line); text-decoration:none; transition:border-color .15s, color .15s, transform .15s;
+  }
+  .btn-ghost:hover{color:var(--accent); border-color:var(--accent); transform:translateY(-1px);}
+  .pane .hero p{margin-left:auto; margin-right:auto; max-width:none; text-align:center;}
+  .pane .hero .hello,.pane .hero .hero-role{margin-bottom:0;}
+  .pane .hero .hero-sub{max-width:52ch; margin-bottom:12px;}
+  .pane .hero .hero-desc{max-width:62ch; margin-bottom:22px;}
+  @media(prefers-reduced-motion:reduce){ .hero>.rise{animation:none; opacity:1;} .hero-orb,.hero .status i{animation:none;} }
 
   .profile-card{display:flex; gap:20px; align-items:center; margin-bottom:8px;}
   .avatar{
@@ -210,6 +290,8 @@
     .wf-grid{grid-template-columns:1fr;}
     .skill-row .name{width:120px;}
     .minimap{display:none;}
+    .tb-menu{display:block;}
+    .tb-dots{display:none;}
   }
 </style>
 </head>
@@ -217,21 +299,33 @@
 <canvas id="bgCanvas"></canvas>
 <canvas id="cursorTrail"></canvas>
 
+<noscript><style>#boot{display:none !important}</style>
+<main style="max-width:680px;margin:0 auto;padding:32px 20px;line-height:1.7;overflow:auto;height:100vh">
+<h1>Nilesh Singh</h1><p>Data Analyst · AI Evaluation — BCA Data Science graduate, Sri Balaji University, Pune, India. Open to Data Analyst and AI Trainer roles.</p>
+<h2>Projects</h2><ul>
+<li><a href="https://github.com/Nilesh-builds/trainlens">TrainLens</a> — AI training-data quality and evaluation platform.</li>
+<li><a href="https://github.com/Nilesh-builds/llm-safety-eval-benchmark">LLM Safety &amp; Response Evaluation Benchmark</a> — 9-dimension benchmark with a two-model judge ensemble.</li>
+<li><a href="https://github.com/Nilesh-builds/customer-churn-analysis">Customer Churn Analysis</a> — Telco churn analysis with cost-sensitive model selection.</li>
+<li><a href="https://github.com/Nilesh-builds/ai-hr-automation-suite">AI HR Automation Suite</a> — 6 n8n HR workflows.</li></ul>
+<h2>Contact</h2><p><a href="mailto:kumarnilash509@gmail.com">kumarnilash509@gmail.com</a> · <a href="https://www.linkedin.com/in/nilesh-singh-data/">LinkedIn</a> · <a href="https://github.com/Nilesh-builds">GitHub</a></p>
+</main></noscript>
 <div id="boot">
   <div class="boot-line" data-text="$ initializing portfolio…"></div>
   <div class="boot-line ok" data-text="✓ pulled github.com/Nilesh-builds (6 repos)"></div>
   <div class="boot-line ok" data-text="✓ loaded projects/ (4)"></div>
   <div class="boot-line ok" data-text="✓ indexed for command palette"></div>
   <div class="boot-line dim" data-text="ready."></div>
+  <button id="bootSkip" type="button">skip ↵</button>
 </div>
 
 <div id="shell">
   <div class="titlebar">
+    <button class="tb-menu" id="menuBtn" type="button" aria-label="Toggle file explorer" aria-expanded="false" aria-controls="sidebar">☰</button>
     <div class="tb-dots"><i></i><i></i><i></i></div>
     <div class="tb-title">nilesh-singh — portfolio</div>
     <div class="tb-socials">
       <a href="https://github.com/Nilesh-builds" target="_blank" rel="noopener">github</a>
-      <a href="https://www.linkedin.com/in/nilesh-singh-b9b6932bb" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://www.linkedin.com/in/nilesh-singh-data/" target="_blank" rel="noopener">linkedin</a>
       <a href="mailto:kumarnilash509@gmail.com">email</a>
     </div>
     <div class="tb-hint">⌘K to search</div>
@@ -246,8 +340,8 @@
         <div class="tree-item" data-file="contact"><span class="ico">▤</span>contact.md</div>
         <div class="tree-item" data-file="resume"><span class="ico">▤</span>resume.pdf</div>
       </div>
-      <div class="tree-folder collapsed"><span class="caret">▾</span>projects</div>
-      <div class="tree-children collapsed">
+      <div class="tree-folder"><span class="caret">▾</span>projects</div>
+      <div class="tree-children">
         <div class="tree-item" data-file="trainlens"><span class="ico">▤</span>trainlens.md</div>
         <div class="tree-item" data-file="llmsafety"><span class="ico">▤</span>llm-safety-eval.md</div>
         <div class="tree-item" data-file="churn"><span class="ico">▤</span>churn-analysis.md</div>
@@ -269,7 +363,6 @@
       </div>
       <div class="tree-folder"><span class="caret">▾</span>meta</div>
       <div class="tree-children">
-        <div class="tree-item" data-file="log"><span class="ico">⎇</span>git-log.md</div>
         <div class="tree-item" data-file="focus"><span class="ico">◆</span>current-focus.yaml</div>
       </div>
     </div>
@@ -283,7 +376,6 @@
     <span id="sb-file">about-me.md</span>
     <span>UTF-8</span>
     <span style="margin-left:auto">Ln 1, Col 1</span>
-    <span>60 FPS</span>
   </div>
 </div>
 
@@ -372,7 +464,7 @@ const panes = {
     <p><b>Problem —</b> the business had no early signal for which customers were likely to leave, and no way to act on it.</p>
     <p><b>Approach —</b> leakage-safe modeling with cross-validation and calibration, cost-sensitive thresholds instead of a default cutoff, and a live dashboard for account managers.</p>
     <div class="viz">
-      <div class="hd"><span>pipeline</span><span>Balanced Random Forest</span></div>
+      <div class="hd"><span>pipeline</span><span>3 models compared</span></div>
       <div class="flow">
         <span class="node">Data-quality checks</span><span class="arrow">→</span>
         <span class="node">SQL views</span><span class="arrow">→</span>
@@ -380,11 +472,11 @@ const panes = {
         <span class="node">Cost-sensitive threshold</span>
       </div>
       <div class="kv" style="margin-top:16px">
-        <div><div class="n">0.84</div><div class="l">ROC-AUC</div></div>
-        <div><div class="n">366/374</div><div class="l">churners caught (98%)</div></div>
+        <div><div class="n">0.84</div><div class="l">ROC-AUC · logistic regression</div></div>
+        <div><div class="n">366/374</div><div class="l">churners caught (98%) · Balanced RF</div></div>
         <div><div class="n">$6,410</div><div class="l">scenario cost</div></div>
       </div>
-      <p style="margin:14px 0 0; font-size:11.5px; color:#7E9389;">Threshold picked under $5-contact / $100-miss assumptions — cost of a missed churner vs. a false alarm, not accuracy alone.</p>
+      <p style="margin:14px 0 0; font-size:11.5px; color:#7E9389;">Threshold picked under $5-contact / $100-miss assumptions — cost of a missed churner vs. a false alarm, not accuracy alone. Logistic regression had the best ROC-AUC (0.842); Balanced Random Forest (0.821) had higher recall and is the dashboard default, so the threshold scenario (threshold 0.05) uses it.</p>
     </div>
     <p><b>Limitation —</b> trained on the public 7,043-row Telco dataset; real customer data would need re-validation.</p>
     <div class="plinks"><a class="btn-demo" href="https://nilesh-customer-churn.streamlit.app/" target="_blank">Live Demo</a><a href="https://github.com/Nilesh-builds/customer-churn-analysis" target="_blank">Repo ↗</a></div>
@@ -410,14 +502,22 @@ const panes = {
     </div>`,
   about: `<div class="tab">about / <b>about-me.md</b><span class="cursor-blink"></span></div>
     <div class="pane">
-    <div class="profile-card">
-      <div class="avatar">NS</div>
-      <div class="profile-meta"><b>Nilesh Singh</b> · Pune, India</div>
-      <a class="btn-demo" style="margin-left:auto" href="#" onclick="downloadResume(); return false;">Download résumé</a>
+    <div class="hero">
+      <div class="hero-grid"></div><div class="hero-orb"></div>
+      <div class="rise"><span class="status"><i></i>Open to work · Data Analyst · AI Trainer</span></div>
+      <p class="hello rise"><b>~/nilesh $</b> Hello, I'm</p>
+      <h1 class="rise"><span class="nm">Nilesh</span> <span class="nm">Singh</span><span class="caret"></span></h1>
+      <p class="hero-role rise"><span class="br">&lt;</span><span id="typed">Data Analyst</span><span class="tcur"></span><span class="br"> /&gt;</span></p>
+      <hr class="hero-line rise">
+      <p class="hero-sub rise">BCA Data Science graduate (2026, CGPA 7) · Sri Balaji University, Pune</p>
+      <p class="hero-desc rise">Building measurable data and AI systems from raw data to business decisions. My work lives after the model — data quality, evaluation, business trade-offs, and human review. Tests and CI on everything shipped.</p>
+      <div class="tags rise"><span>SQL</span><span>Python</span><span>Power BI</span><span>Excel</span><span>Streamlit</span><span>LLM APIs</span></div>
+      <div class="cta rise">
+        <a class="btn-demo" href="#" onclick="downloadResume(); return false;">Download résumé</a>
+        <a class="btn-ghost" href="#" onclick="openFile('trainlens'); return false;">View projects →</a>
+      </div>
+      <div class="links rise"><a href="https://github.com/Nilesh-builds" target="_blank" rel="noopener">GitHub ↗</a><a href="https://www.linkedin.com/in/nilesh-singh-data/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="mailto:kumarnilash509@gmail.com">kumarnilash509@gmail.com</a></div>
     </div>
-    <h1 class="disp" style="margin-top:18px">Nilesh Singh</h1>
-    <div class="role">BCA Data Science graduate (2026, CGPA 7) · Sri Balaji University, Pune</div>
-    <p>Building measurable data and AI systems from raw data to business decisions. My work lives after the model — data quality, evaluation, business trade-offs, and human review. Tests and CI on everything shipped.</p>
     <div class="kvblock">
       <div><span class="k">ROLE</span><span class="v accent">Data Analyst · AI Evaluation</span></div>
       <div><span class="k">STATUS</span><span class="v">BCA (Data Science) graduate, 2026</span></div>
@@ -464,7 +564,7 @@ const panes = {
     </div>`,
   resume: `<div class="tab">about / <b>resume.pdf</b><span class="cursor-blink"></span></div>
     <div class="pane"><h1 class="disp">Résumé</h1>
-    <div class="role">Nilesh Singh — Data Analyst &amp; ML/LLM Engineering</div>
+    <div class="role">Nilesh Singh — Data Analyst · AI Evaluation</div>
     <p>SQL · PySpark · Model &amp; LLM Evaluation · Dashboards — one-page PDF, kept in sync with this page.</p>
     <a class="btn-demo" href="#" onclick="downloadResume(); return false;">Download PDF</a>
     </div>`,
@@ -472,7 +572,7 @@ const panes = {
     <div class="pane"><h1 class="disp">Why the default 0.5 threshold is usually wrong</h1>
     <div class="role">note from the churn analysis project</div>
     <p>Most classifiers split at a 0.5 probability by default, but that number has no relationship to what a mistake actually costs. On the churn project, missing a real churner (a false negative) was assumed to cost $100 in lost revenue, while a wasted retention call (a false positive) cost about $5.</p>
-    <p>Once you plug those numbers in, the optimal cutoff moves — in this case, low enough to deliberately over-flag customers, because a wasted $5 call is cheap next to a missed $100 loss. That threshold caught 366 of 374 churners (98%) for a $6,410 total scenario cost, at ROC-AUC 0.84.</p>
+    <p>Once you plug those numbers in, the optimal cutoff moves — in this case, low enough to deliberately over-flag customers, because a wasted $5 call is cheap next to a missed $100 loss. On the Balanced Random Forest (the dashboard default), that threshold caught 366 of 374 churners (98%) for a $6,410 total scenario cost. Logistic regression had the best ROC-AUC at 0.84, while Balanced RF scored 0.82 with higher recall.</p>
     <p><b>Takeaway —</b> pick the threshold from the cost of being wrong, not from accuracy.</p>
     </div>`,
   note2: `<div class="tab">notes / <b>judge-vs-human-agreement.md</b><span class="cursor-blink"></span></div>
@@ -522,28 +622,8 @@ const panes = {
     <div class="kvblock">
       <div><span class="k">LEARNING</span><span class="v">Advanced ML &amp; model evaluation</span></div>
       <div><span class="k"></span><span class="v">Power BI dashboards for business storytelling</span></div>
-      <div><span class="k">STUDYING</span><span class="v">BCA, Data Science — Sri Balaji University, Pune</span></div>
+      <div><span class="k">EDUCATION</span><span class="v">BCA, Data Science (2026) — Sri Balaji University, Pune</span></div>
       <div><span class="k">OPEN_TO</span><span class="v accent">Data Analyst · AI Trainer roles</span></div>
-    </div>
-    </div>`,
-  log: `<div class="tab">meta / <b>git-log.md</b><span class="cursor-blink"></span></div>
-    <div class="pane"><h1 class="disp">Commit history</h1>
-    <p style="font-size:11.5px; margin-bottom:6px; color:#7E9389;">Click a commit to expand.</p>
-    <div class="log-item" data-add="118" data-rem="9">
-      <div class="log-head"><span class="date">2026-09</span><span class="hash">a3f91c</span><span>llm-safety-eval-benchmark: judge validation (11/11), κ=0.902</span><span class="caret">▶</span></div>
-      <div class="log-diff"><div class="log-diff-inner"><span class="add">+118</span> &nbsp; <span class="rem">−9</span> &nbsp; judge_ensemble.py, validation_report.md</div></div>
-    </div>
-    <div class="log-item" data-add="240" data-rem="3">
-      <div class="log-head"><span class="date">2026-08</span><span class="hash">7d02be</span><span>ai-hr-automation-suite: 6 n8n workflows connected end to end</span><span class="caret">▶</span></div>
-      <div class="log-diff"><div class="log-diff-inner"><span class="add">+240</span> &nbsp; <span class="rem">−3</span> &nbsp; workflows/*.json, README.md</div></div>
-    </div>
-    <div class="log-item" data-add="86" data-rem="14">
-      <div class="log-head"><span class="date">2026-07</span><span class="hash">c14e2a</span><span>trainlens: quality classifier + dashboard, 98.85% score</span><span class="caret">▶</span></div>
-      <div class="log-diff"><div class="log-diff-inner"><span class="add">+86</span> &nbsp; <span class="rem">−14</span> &nbsp; classifier.py, dashboard.py</div></div>
-    </div>
-    <div class="log-item" data-add="57" data-rem="6">
-      <div class="log-head"><span class="date">2026-06</span><span class="hash">99b6f0</span><span>customer-churn-analysis: cost-sensitive thresholds + dashboard</span><span class="caret">▶</span></div>
-      <div class="log-diff"><div class="log-diff-inner"><span class="add">+57</span> &nbsp; <span class="rem">−6</span> &nbsp; threshold.py, dashboard.py</div></div>
     </div>
     </div>`
 };
@@ -571,8 +651,25 @@ function updateViewport(){
 }
 document.getElementById('editor').addEventListener('scroll', updateViewport);
 
+let heroTimer;
+function startHero(){
+  clearTimeout(heroTimer);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const words=['Data Analyst','AI Evaluation','AI Trainer','Data Quality'];
+  let w=0,c=0,del=false;
+  (function tick(){
+    const el=document.getElementById('typed'); if(!el) return;
+    const word=words[w];
+    el.textContent=word.slice(0,c);
+    if(!del && c===word.length){del=true; heroTimer=setTimeout(tick,1700); return;}
+    if(del && c===0){del=false; w=(w+1)%words.length;}
+    c+=del?-1:1;
+    heroTimer=setTimeout(tick,del?40:85);
+  })();
+}
 function openFile(key){
   document.getElementById('editor').innerHTML = panes[key];
+  startHero();
   document.getElementById('editor').scrollTop = 0;
   document.getElementById('sb-file').textContent =
     document.querySelector(`.tree-item[data-file="${key}"]`)?.childNodes[1]?.textContent.trim() || key;
@@ -582,9 +679,6 @@ function openFile(key){
   setTimeout(updateViewport, 0);
   recentFiles = [key, ...recentFiles.filter(k=>k!==key)].slice(0,3);
 
-  document.querySelectorAll('.log-head').forEach(head=>{
-    head.onclick = () => head.parentElement.classList.toggle('open');
-  });
 }
 document.querySelectorAll('.tree-item').forEach(el=>{
   el.addEventListener('click', ()=>openFile(el.dataset.file));
@@ -638,19 +732,43 @@ document.addEventListener('keydown', (e)=>{
 pinput?.addEventListener('input', e=>renderResults(e.target.value));
 palette.addEventListener('click', e=>{ if(e.target===palette) closePalette(); });
 
+// mobile explorer toggle + keyboard access
+(function(){
+  const sb = document.getElementById('sidebar'), btn = document.getElementById('menuBtn');
+  function setOpen(o){ sb.classList.toggle('open', o); btn.setAttribute('aria-expanded', String(o)); }
+  btn.addEventListener('click', e=>{ e.stopPropagation(); setOpen(!sb.classList.contains('open')); });
+  document.addEventListener('click', e=>{
+    if(sb.classList.contains('open') && !sb.contains(e.target)) setOpen(false);
+  });
+  document.querySelectorAll('.tree-item, .tree-folder').forEach(el=>{
+    el.setAttribute('role','button'); el.setAttribute('tabindex','0');
+    el.addEventListener('keydown', e=>{
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); el.click(); }
+    });
+  });
+  const hint = document.querySelector('.tb-hint');
+  if(hint && !/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)) hint.textContent = 'Ctrl+K to search';
+})();
+
 // typing boot sequence
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let bootDone = false;
 function runBoot(){
   const lines = [...document.querySelectorAll('.boot-line')];
-  if(reduce){ finishBoot(); return; }
+  let seen = false; try{ seen = sessionStorage.getItem('bootSeen')==='1'; }catch(e){}
+  if(reduce || seen){ finishBoot(); return; }
+  document.getElementById('bootSkip')?.addEventListener('click', finishBoot);
+  window.addEventListener('keydown', finishBoot, {once:true});
   let li = 0;
   function typeLine(){
+    if(bootDone) return;
     if(li >= lines.length){ setTimeout(finishBoot, 300); return; }
     const el = lines[li];
     const text = el.dataset.text;
     let ci = 0;
     el.innerHTML = '<span class="boot-cursor"></span>';
     const iv = setInterval(()=>{
+      if(bootDone){ clearInterval(iv); return; }
       ci++;
       el.innerHTML = text.slice(0,ci) + '<span class="boot-cursor"></span>';
       if(ci >= text.length){
@@ -663,6 +781,8 @@ function runBoot(){
   typeLine();
 }
 function finishBoot(){
+  if(bootDone) return; bootDone = true;
+  try{ sessionStorage.setItem('bootSeen','1'); }catch(e){}
   document.getElementById('boot').style.display='none';
   document.getElementById('shell').classList.add('ready');
   openFile('about');
