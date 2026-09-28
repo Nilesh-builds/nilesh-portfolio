@@ -280,7 +280,7 @@
   .pane>*:nth-child(7){animation-delay:.32s} .pane>*:nth-child(8){animation-delay:.37s}
   @keyframes paneIn{from{opacity:0; transform:translateY(7px);} to{opacity:1; transform:none;}}
   @media(prefers-reduced-motion:reduce){ .pane>*{animation:none; opacity:1;} }
-  #cursorTrail{position:fixed; inset:0; z-index:1; pointer-events:none;}
+  #cursorTrail{position:fixed; inset:0; z-index:5; pointer-events:none;}
 
   @media(max-width:720px){
     .sidebar{position:fixed; left:0; top:38px; bottom:26px; z-index:20; transform:translateX(-100%); transition:transform .2s ease;}
@@ -830,32 +830,57 @@ runBoot();
   size(); frame();
 })();
 
-// cursor-follow particle trail
+// cursor-following snake
 (function(){
   const canvas = document.getElementById('cursorTrail');
   const ctx = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced) return;
-  let w,h,particles=[];
-  function size(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
-  window.addEventListener('resize', size); size();
-  window.addEventListener('mousemove', (e)=>{
-    for(let i=0;i<2;i++){
-      particles.push({x:e.clientX, y:e.clientY, vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.5)*0.6-0.2, life:1});
-    }
-    if(particles.length>120) particles.splice(0, particles.length-120);
-  });
-  function frame(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const N = 24, GAP = 8;
+  let w, h, dpr, segs, lastInput = -1e9;
+  const target = {x:0, y:0};
+  function size(){
+    dpr = window.devicePixelRatio || 1;
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w*dpr; canvas.height = h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  size();
+  segs = Array.from({length:N}, (_,i)=>({x:w*0.5 - i*GAP, y:h*0.5}));
+  function aim(x,y){ target.x=x; target.y=y; lastInput=performance.now(); }
+  function touch(e){ const t=e.touches[0]; if(t) aim(t.clientX,t.clientY); }
+  window.addEventListener('resize', size);
+  window.addEventListener('mousemove', e=>aim(e.clientX,e.clientY), {passive:true});
+  window.addEventListener('touchstart', touch, {passive:true});
+  window.addEventListener('touchmove', touch, {passive:true});
+  function frame(now){
     ctx.clearRect(0,0,w,h);
-    particles.forEach(p=>{
-      p.x+=p.vx; p.y+=p.vy; p.life-=0.02;
-      ctx.fillStyle='rgba(200,255,77,'+Math.max(p.life*0.55,0)+')';
-      ctx.beginPath(); ctx.arc(p.x,p.y,1.4,0,7); ctx.fill();
+    if(now - lastInput > 2500){ // wander on its own when nobody is steering
+      target.x = w*0.5 + Math.cos(now*0.0004)*w*0.32;
+      target.y = h*0.5 + Math.sin(now*0.0007)*h*0.26;
+    }
+    const head = segs[0];
+    const dx = target.x-head.x, dy = target.y-head.y, dist = Math.hypot(dx,dy);
+    if(dist > 4){ const sp = Math.min(dist*0.09, 6); head.x += dx/dist*sp; head.y += dy/dist*sp; }
+    for(let i=1;i<N;i++){
+      const p=segs[i-1], s=segs[i];
+      const ddx=p.x-s.x, ddy=p.y-s.y, d=Math.hypot(ddx,ddy);
+      if(d>GAP){ const k=(d-GAP)/d; s.x+=ddx*k; s.y+=ddy*k; }
+    }
+    for(let i=N-1;i>=0;i--){
+      const t=i/(N-1), r=6.5-t*4.2;
+      ctx.fillStyle='rgba(200,255,77,'+(0.55-0.35*t)+')';
+      ctx.beginPath(); ctx.arc(segs[i].x, segs[i].y, r, 0, 6.2832); ctx.fill();
+    }
+    const ang = Math.atan2(head.y-segs[2].y, head.x-segs[2].x);
+    ctx.fillStyle = '#08120E';
+    [-1,1].forEach(sg=>{
+      const ex = head.x + Math.cos(ang)*2.5 + Math.cos(ang+1.5708)*sg*3;
+      const ey = head.y + Math.sin(ang)*2.5 + Math.sin(ang+1.5708)*sg*3;
+      ctx.beginPath(); ctx.arc(ex, ey, 1.3, 0, 6.2832); ctx.fill();
     });
-    particles = particles.filter(p=>p.life>0);
     requestAnimationFrame(frame);
   }
-  frame();
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
